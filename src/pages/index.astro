@@ -1,13 +1,21 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
-  <h1 class="text-6xl font-bold text-red-500">
-   Tailwind Works
-</h1>
+  <main class="min-h-screen bg-black text-white">
+    
+    <section class="flex min-h-screen flex-col items-center justify-center px-6 text-center">
+      
+      <h1 class="mb-6 text-6xl font-bold tracking-wide md:text-8xl">
+        THEORSHAN
+      </h1>
+
+      <p class="max-w-2xl text-lg text-gray-300 md:text-2xl">
+        Music, philosophy, technology, and the search for the eternal.
+      </p>
+
+    </section>
+
+  </main>
 </Layout>
