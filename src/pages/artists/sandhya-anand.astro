@@ -8,15 +8,9 @@ const artist = {
   alt: "Portrait of Carnatic musician Sandhya Anand",
   location: "Theorshan featured artist for kutcheris, recordings, and devotional programs",
   websiteUrl: "https://www.sandhyaanand.com/about",
-  spotifyUrl: "",
-  soundCloudUrl:
-    "https://soundcloud.com/srikanth-s-iyer/nada-tanumanisham/s-OVaY8op0hNW",
+  spotifyUrl: "https://open.spotify.com/artist/4KSrMum9A1NsMHmYzxtVk9?si=PgjMHY9ERiSLN4YmDjzTDg",
+  spotifyEmbedUrl: "https://open.spotify.com/embed/artist/4KSrMum9A1NsMHmYzxtVk9?utm_source=generator",
   bookingUrl: "/contact",
-  soundCloudEmbedUrl:
-    "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2121207228%3Fsecret_token%3Ds-OVaY8op0hNW&color=%23fcd34d&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true",
-  soundCloudUserUrl: "https://soundcloud.com/srikanth-s-iyer",
-  soundCloudUserName: "Theorshan Music",
-  soundCloudTrackTitle: "Nada Tanumanisham",
   bio:
     "Sandhya Anand is a Carnatic vocalist and violinist whose music brings scholarship, bhava, and stage experience into close listening spaces. A graded artist of All India Radio and Doordarshan, she is also a 2025 Individual Artist Fellow of the New Jersey State Council on the Arts. With deep training in Carnatic music and Sanskrit, Sandhya is a natural fit for Theorshan's intimate kutcheris, devotional programs, and studio recordings.",
   highlights: [
@@ -57,18 +51,14 @@ const artist = {
             Artist Website
           </a>
 
-          {
-            artist.spotifyUrl && (
-              <a
-                href={artist.spotifyUrl}
-                target="_blank"
-                rel="noreferrer"
-                class="rounded border border-white/35 bg-white/10 px-7 py-4 text-center font-semibold text-white transition hover:border-amber-300 hover:text-amber-200"
-              >
-                Spotify
-              </a>
-            )
-          }
+          <a
+            href={artist.spotifyUrl}
+            target="_blank"
+            rel="noreferrer"
+            class="rounded border border-white/35 bg-white/10 px-7 py-4 text-center font-semibold text-white transition hover:border-amber-300 hover:text-amber-200"
+          >
+            Spotify
+          </a>
         </div>
       </div>
     </div>
@@ -101,46 +91,35 @@ const artist = {
     <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
       <div>
         <p class="text-sm uppercase tracking-[0.35em] text-amber-300">Listen</p>
-        <h2 class="mt-4 font-serif text-4xl text-white">Featured studio sample.</h2>
+        <h2 class="mt-4 font-serif text-4xl text-white">Listen on Spotify.</h2>
         <p class="mt-5 max-w-xl leading-relaxed text-stone-300">
-          A Theorshan-produced recording sample featuring Sandhya Anand.
+          Explore Sandhya Anand's artist profile and released recordings.
         </p>
       </div>
 
       <div class="grid gap-5">
         <div class="border border-white/15 bg-stone-950 p-6">
-          <p class="text-xs uppercase tracking-[0.28em] text-amber-300">SoundCloud sample</p>
-          <h3 class="mt-4 font-serif text-3xl text-white">{artist.soundCloudTrackTitle}</h3>
+          <p class="text-xs uppercase tracking-[0.28em] text-amber-300">Spotify artist</p>
+          <h3 class="mt-4 font-serif text-3xl text-white">{artist.name}</h3>
 
           <iframe
-            title={`${artist.name} SoundCloud sample`}
-            class="mt-6 h-[300px] w-full border-0"
-            scrolling="no"
-            allow="autoplay; encrypted-media"
-            src={artist.soundCloudEmbedUrl}
+            data-testid="embed-iframe"
+            title={`${artist.name} Spotify artist profile`}
+            class="mt-6 h-[352px] w-full rounded-xl border-0"
+            allowfullscreen
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"
+            src={artist.spotifyEmbedUrl}
           ></iframe>
 
-          <p class="mt-3 truncate text-xs text-stone-500">
-            <a
-              href={artist.soundCloudUserUrl}
-              title={artist.soundCloudUserName}
-              target="_blank"
-              rel="noreferrer"
-              class="transition hover:text-amber-200"
-            >
-              {artist.soundCloudUserName}
-            </a>
-            {" · "}
-            <a
-              href={artist.soundCloudUrl}
-              title={artist.soundCloudTrackTitle}
-              target="_blank"
-              rel="noreferrer"
-              class="transition hover:text-amber-200"
-            >
-              {artist.soundCloudTrackTitle}
-            </a>
-          </p>
+          <a
+            href={artist.spotifyUrl}
+            target="_blank"
+            rel="noreferrer"
+            class="mt-5 inline-block rounded bg-amber-300 px-5 py-3 text-sm font-semibold text-black transition hover:bg-amber-200"
+          >
+            Open Spotify
+          </a>
         </div>
 
         <div class="border border-white/15 bg-stone-950 p-6">
