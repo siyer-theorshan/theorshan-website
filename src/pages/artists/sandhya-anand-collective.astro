@@ -1,0 +1,110 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const collective = {
+  name: "The Sandhya Anand Collective",
+  style: "Film Fusion",
+  image: "/artist-placeholders/sandhya-anand-collective-band-cropped.png",
+  alt: "The Sandhya Anand Collective band portrait",
+  youtubeUrl: "https://www.youtube.com/@TheSandhyaAnandCollective",
+  youtubeEmbedUrl: "https://www.youtube.com/embed/dh2Jjbj_o1w?si=-A9aytF8K8ilBLzN",
+  bookingUrl: "/contact",
+  bio:
+    "The Sandhya Anand Collective reimagines beloved Indian film compositions through the language of ragas, rock, blues, and live improvisation. The band treats film songs as living standards: familiar melodies become launching points for exploration, conversation, and fresh musical dialogue.",
+  highlights: [
+    "Raga-based interpretations of Indian film music",
+    "Inspired by Ilaiyaraja and other iconic composers",
+    "A live band format built for improvisation and audience connection",
+  ],
+  formats: ["Film Fusion", "Reel to Raga", "Concerts", "Festivals", "Cultural events"],
+};
+---
+
+<Layout title={`${collective.name} | Theorshan`}>
+  <section class="bg-black px-5 py-20 text-white sm:px-6 lg:px-8">
+    <div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
+      <div class="overflow-hidden border border-white/15 bg-stone-950">
+        <img src={collective.image} alt={collective.alt} class="w-full object-cover" />
+      </div>
+
+      <div>
+        <p class="text-sm uppercase tracking-[0.35em] text-amber-300">{collective.style}</p>
+        <h1 class="mt-5 font-serif text-5xl leading-none text-white sm:text-7xl">
+          {collective.name}
+        </h1>
+        <p class="mt-6 max-w-2xl text-lg leading-relaxed text-stone-300">{collective.bio}</p>
+
+        <div class="mt-9 flex flex-col gap-4 sm:flex-row">
+          <a
+            href={collective.bookingUrl}
+            class="rounded bg-amber-300 px-7 py-4 text-center font-semibold text-black shadow-xl shadow-amber-950/30 transition hover:bg-amber-200"
+          >
+            Book the Collective
+          </a>
+
+          <a
+            href={collective.youtubeUrl}
+            target="_blank"
+            rel="noreferrer"
+            class="rounded border border-white/35 bg-white/10 px-7 py-4 text-center font-semibold text-white transition hover:border-amber-300 hover:text-amber-200"
+          >
+            YouTube
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-stone-950 px-5 py-20 text-white sm:px-6 lg:px-8">
+    <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+      <div>
+        <p class="text-sm uppercase tracking-[0.35em] text-amber-300">Reel to Raga</p>
+        <h2 class="mt-4 font-serif text-4xl text-white">Film songs as a platform for improvisation.</h2>
+      </div>
+
+      <div>
+        <div class="aspect-video overflow-hidden border border-white/15 bg-black">
+          <iframe
+            title="The Sandhya Anand Collective featured video"
+            class="h-full w-full border-0"
+            src={collective.youtubeEmbedUrl}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+        </div>
+
+        <div class="mt-8 grid gap-4 md:grid-cols-3">
+          {
+            collective.highlights.map((highlight) => (
+              <div class="border border-white/15 bg-black p-5">
+                <p class="leading-relaxed text-stone-300">{highlight}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-black px-5 py-20 text-white sm:px-6 lg:px-8">
+    <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+      <div>
+        <p class="text-sm uppercase tracking-[0.35em] text-amber-300">Formats</p>
+        <h2 class="mt-4 font-serif text-4xl text-white">Built for rooms that want energy and depth.</h2>
+      </div>
+
+      <div class="border border-white/15 bg-stone-950 p-6">
+        <div class="flex flex-wrap gap-2">
+          {
+            collective.formats.map((format) => (
+              <span class="rounded border border-white/15 bg-black px-3 py-2 text-sm text-stone-300">
+                {format}
+              </span>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
