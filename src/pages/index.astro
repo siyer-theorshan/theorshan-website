@@ -1,0 +1,543 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+// Add or edit homepage content here. The page below updates automatically.
+const heroSlides = [
+  {
+    eyebrow: "Ancient vision. Modern sound.",
+    title: "Sacred sound, close enough to feel.",
+    text: "Theorshan curates intimate live performances where classical roots, devotional atmosphere, and modern production meet in one unforgettable room.",
+    image: "/theorshan-homepage-mockup.png",
+    alt: "Theorshan live music atmosphere",
+    primaryHref: "/artists",
+    primaryLabel: "Explore Artists",
+    secondaryHref: "/events",
+    secondaryLabel: "View Events",
+  },
+  {
+    eyebrow: "For homes, halls, and sacred spaces",
+    title: "Host a concert with presence.",
+    text: "Bring refined artists into close, meaningful settings built for listening, connection, and cultural memory.",
+    image: "/theorshan-homepage-mockup.png",
+    alt: "Warm performance setting",
+    primaryHref: "/events",
+    primaryLabel: "Plan an Event",
+    secondaryHref: "/contact",
+    secondaryLabel: "Start a Booking",
+  },
+  {
+    eyebrow: "Artist-led experiences",
+    title: "Classical roots with a modern pulse.",
+    text: "Discover performers selected for craft, sincerity, and the ability to hold a room from the first note.",
+    image: "/theorshan-homepage-mockup.png",
+    alt: "Theorshan artist feature",
+    primaryHref: "/artists",
+    primaryLabel: "Meet the Artists",
+    secondaryHref: "/events",
+    secondaryLabel: "Upcoming Events",
+  },
+  {
+    eyebrow: "Home studio production and release support",
+    title: "Record your music. Reach every listener.",
+    text: "Theorshan helps artists produce albums in a focused home studio setting, then prepare releases for platforms like Spotify, YouTube Music, and Apple Music.",
+    image: "/theorshan-homepage-mockup.png",
+    alt: "Theorshan recording and release support",
+    primaryHref: "/contact",
+    primaryLabel: "Record With Us",
+    secondaryHref: "#recording",
+    secondaryLabel: "See Services",
+  },
+];
+
+const artists = [
+  {
+    name: "Ananya Rao",
+    style: "Carnatic vocals",
+    image: "/artist-placeholders/ananya-rao.png",
+    profileHref: "/artists/ananya-rao",
+    note: "Devotional repertoire, intimate concerts, and collaborative sets.",
+  },
+  {
+    name: "Aarya Sen",
+    style: "Hindustani vocals",
+    image: "/artist-placeholders/aarya-sen.png",
+    note: "Morning and evening ragas for close listening bhaitaks.",
+  },
+  {
+    name: "Mira Dev",
+    style: "Veena and voice",
+    image: "/artist-placeholders/mira-dev.png",
+    note: "Meditative programs for temples, homes, and cultural gatherings.",
+  },
+  {
+    name: "Sruti Laya Duo",
+    style: "Violin and mridangam",
+    image: "/artist-placeholders/sruti-laya-duo.png",
+    note: "A compact Carnatic duo for kutcheris and lecture demos.",
+  },
+  {
+    name: "Bhakti Pulse Collective",
+    style: "Bhajan clubbing / devotional fusion",
+    image: "/artist-placeholders/bhakti-pulse-collective.png",
+    note: "Familiar bhajans with live musicianship and modern energy.",
+  },
+];
+
+const events = [
+  {
+    type: "Intimate Concerts",
+    title: "Living room listening sessions",
+    description: "A focused program for families and invited guests.",
+  },
+  {
+    type: "Sacred Spaces",
+    title: "Temple and meditation gatherings",
+    description: "Music shaped around reverence, arrival, and stillness.",
+  },
+  {
+    type: "Cultural Events",
+    title: "Curated festival moments",
+    description: "Artist pairings and set design for community programs.",
+  },
+];
+
+const principles = ["Curated artists", "Warm production", "Flexible formats"];
+
+const featuredFormats = [
+  {
+    tradition: "Carnatic",
+    title: "Intimate kutcheri at home",
+    description:
+      "A refined listening experience for homes, sacred spaces, and small venues with artist selection, flow, and production held together by Theorshan.",
+  },
+  {
+    tradition: "Hindustani",
+    title: "Bhaitak for morning and evening ragas",
+    description:
+      "A close, unhurried setting for Hindustani ragas, shaped around the time of day, the mood of the room, and deep listening.",
+  },
+  {
+    tradition: "Devotional fusion",
+    title: "Bhajan clubbing",
+    description:
+      "A vibrant devotional gathering that blends familiar bhajans, live musicianship, and modern energy for community celebration.",
+  },
+];
+
+const studioServices = [
+  {
+    title: "Home studio recording",
+    description:
+      "A calm, artist-friendly recording setup for vocals, classical repertoire, devotional music, and intimate ensemble work.",
+  },
+  {
+    title: "Album production",
+    description:
+      "Production guidance from session flow to final polish, including experience producing albums for artists such as Sandhya Anand.",
+  },
+  {
+    title: "Digital distribution",
+    description:
+      "Release support through Theorshan's DistroKid workflow to help get your music onto major streaming platforms.",
+  },
+];
+
+const distributionPlatforms = ["Spotify", "YouTube Music", "Apple Music", "Amazon Music", "Instagram", "TikTok"];
+---
+
+<Layout title="Theorshan | Ancient vision. Modern sound." headerOverlay={true}>
+  <section class="relative min-h-screen overflow-hidden bg-black text-white" aria-label="Theorshan homepage">
+    <div class="absolute inset-0">
+      {
+        heroSlides.map((slide, index) => (
+          <img
+            src={slide.image}
+            alt={slide.alt}
+            data-hero-image
+            data-slide={index}
+            class:list={[
+              "absolute inset-0 h-full w-full object-cover object-top transition duration-700",
+              index === 0 ? "opacity-70" : "opacity-0",
+            ]}
+          />
+        ))
+      }
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_26%_18%,rgba(252,211,77,0.2),transparent_28%),linear-gradient(90deg,rgba(0,0,0,0.96)_0%,rgba(0,0,0,0.76)_43%,rgba(0,0,0,0.28)_100%)]"></div>
+      <div class="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
+    </div>
+
+    <div class="relative z-20 mx-auto grid max-w-7xl gap-14 px-5 pb-20 pt-32 sm:px-6 md:min-h-screen md:grid-cols-[1.02fr_0.98fr] md:items-center md:pt-28 lg:px-8">
+      <div>
+        <div class="relative min-h-[440px] sm:min-h-[480px]">
+          {
+            heroSlides.map((slide, index) => (
+              <article
+                data-hero-panel
+                data-slide={index}
+                class:list={[
+                  "absolute inset-0 flex flex-col justify-center transition duration-700",
+                  index === 0 ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
+                ]}
+              >
+                <p class="mb-6 text-sm uppercase tracking-[0.35em] text-amber-300">
+                  {slide.eyebrow}
+                </p>
+
+                <h1 class="max-w-3xl font-serif text-5xl leading-[0.95] text-white sm:text-6xl md:text-7xl lg:text-8xl">
+                  {slide.title}
+                </h1>
+
+                <p class="mt-8 max-w-xl text-lg leading-relaxed text-stone-200 sm:text-xl">
+                  {slide.text}
+                </p>
+
+                <div class="mt-10 flex flex-col gap-4 sm:flex-row">
+                  <a
+                    href={slide.primaryHref}
+                    class="rounded bg-amber-300 px-7 py-4 text-center font-semibold text-black shadow-xl shadow-amber-950/30 transition hover:bg-amber-200"
+                  >
+                    {slide.primaryLabel}
+                  </a>
+
+                  <a
+                    href={slide.secondaryHref}
+                    class="rounded border border-white/45 bg-white/10 px-7 py-4 text-center font-semibold text-white backdrop-blur transition hover:border-amber-300 hover:text-amber-200"
+                  >
+                    {slide.secondaryLabel}
+                  </a>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+
+        <div class="mt-2 flex items-center gap-3" aria-label="Hero slides">
+          {
+            heroSlides.map((slide, index) => (
+              <button
+                type="button"
+                data-hero-dot
+                data-slide={index}
+                aria-label={`Show slide ${index + 1}: ${slide.title}`}
+                class:list={[
+                  "h-2.5 rounded-full transition",
+                  index === 0 ? "w-10 bg-amber-300" : "w-2.5 bg-white/35 hover:bg-white/60",
+                ]}
+              />
+            ))
+          }
+        </div>
+      </div>
+
+      <aside class="grid gap-5 md:justify-self-end">
+        <div class="max-w-md border-l border-amber-300/70 bg-black/40 p-6 backdrop-blur">
+          <div class="flex items-center justify-between gap-4">
+            <p class="text-sm uppercase tracking-[0.28em] text-amber-200">Featured format</p>
+
+            <div class="flex gap-2" aria-label="Featured format slides">
+              {
+                featuredFormats.map((format, index) => (
+                  <button
+                    type="button"
+                    data-format-dot
+                    data-slide={index}
+                    aria-label={`Show ${format.tradition} format`}
+                    class:list={[
+                      "h-2.5 rounded-full transition",
+                      index === 0 ? "w-8 bg-amber-300" : "w-2.5 bg-white/35 hover:bg-white/60",
+                    ]}
+                  />
+                ))
+              }
+            </div>
+          </div>
+
+          <div class="relative mt-4 min-h-[210px]">
+            {
+              featuredFormats.map((format, index) => (
+                <article
+                  data-format-panel
+                  data-slide={index}
+                  class:list={[
+                    "absolute inset-0 transition duration-500",
+                    index === 0 ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
+                  ]}
+                >
+                  <p class="text-xs uppercase tracking-[0.28em] text-stone-300">
+                    {format.tradition}
+                  </p>
+                  <h2 class="mt-4 font-serif text-3xl text-white">{format.title}</h2>
+                  <p class="mt-4 leading-relaxed text-stone-300">{format.description}</p>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+
+        <div class="grid max-w-md grid-cols-3 border border-white/15 bg-white/10 text-center backdrop-blur">
+          {
+            principles.map((principle) => (
+              <div class="border-r border-white/15 px-3 py-5 last:border-r-0">
+                <p class="text-xs uppercase tracking-widest text-stone-300">{principle}</p>
+              </div>
+            ))
+          }
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="bg-black px-5 py-20 text-white sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-7xl">
+      <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <div>
+          <p class="text-sm uppercase tracking-[0.35em] text-amber-300">Artists</p>
+          <h2 class="mt-4 font-serif text-4xl text-white sm:text-5xl">Scrollable artist roster</h2>
+        </div>
+
+        <div class="flex gap-3">
+          <button
+            type="button"
+            data-scroll-artists="left"
+            aria-label="Scroll artists left"
+            class="h-11 w-11 rounded border border-white/25 bg-white/10 text-xl transition hover:border-amber-300 hover:text-amber-200"
+          >
+            &larr;
+          </button>
+          <button
+            type="button"
+            data-scroll-artists="right"
+            aria-label="Scroll artists right"
+            class="h-11 w-11 rounded border border-white/25 bg-white/10 text-xl transition hover:border-amber-300 hover:text-amber-200"
+          >
+            &rarr;
+          </button>
+        </div>
+      </div>
+
+      <div
+        data-artist-track
+        class="scrollbar-soft mt-10 flex snap-x gap-5 overflow-x-auto pb-6"
+        tabindex="0"
+        aria-label="Scrollable artists"
+      >
+        {
+          artists.map((artist, index) => (
+            <article class="min-w-[78vw] snap-start border border-white/15 bg-stone-950 p-5 sm:min-w-[360px]">
+              <a
+                href={artist.profileHref || "/artists"}
+                aria-label={`View ${artist.name} profile`}
+                class="relative flex h-56 items-end overflow-hidden p-5"
+              >
+                <img
+                  src={artist.image}
+                  alt={`Profile image for ${artist.name}`}
+                  class="absolute inset-0 h-full w-full object-cover"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                <span class="rounded bg-black/70 px-3 py-2 text-xs uppercase tracking-widest text-amber-200 backdrop-blur">
+                  Artist {index + 1}
+                </span>
+              </a>
+              <h3 class="mt-5 font-serif text-3xl text-white">
+                <a href={artist.profileHref || "/artists"} class="transition hover:text-amber-200">
+                  {artist.name}
+                </a>
+              </h3>
+              <p class="mt-2 text-amber-200">{artist.style}</p>
+              <p class="mt-4 leading-relaxed text-stone-300">{artist.note}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="recording" class="bg-stone-950 px-5 py-20 text-white sm:px-6 lg:px-8">
+    <div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+      <div>
+        <p class="text-sm uppercase tracking-[0.35em] text-amber-300">Recording and release</p>
+        <h2 class="mt-4 max-w-2xl font-serif text-4xl text-white sm:text-5xl">
+          From home studio session to streaming platforms.
+        </h2>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-stone-300">
+          Theorshan supports artists who want a warm recording process and a practical path to
+          release. Record the music, shape the album, and prepare it for listeners on the platforms
+          where they already are.
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          {
+            distributionPlatforms.map((platform) => (
+              <span class="rounded border border-amber-300/30 bg-black px-4 py-2 text-sm text-amber-100">
+                {platform}
+              </span>
+            ))
+          }
+        </div>
+
+        <a
+          href="/contact"
+          class="mt-10 inline-block rounded bg-amber-300 px-7 py-4 text-center font-semibold text-black shadow-xl shadow-amber-950/30 transition hover:bg-amber-200"
+        >
+          Start a Release
+        </a>
+      </div>
+
+      <div class="grid gap-5">
+        {
+          studioServices.map((service, index) => (
+            <article class="border border-white/15 bg-black p-6">
+              <p class="text-xs uppercase tracking-[0.28em] text-amber-300">
+                Service {index + 1}
+              </p>
+              <h3 class="mt-4 font-serif text-3xl text-white">{service.title}</h3>
+              <p class="mt-4 leading-relaxed text-stone-300">{service.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-stone-950 px-5 py-20 text-white sm:px-6 lg:px-8">
+    <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+      <div>
+        <p class="text-sm uppercase tracking-[0.35em] text-amber-300">Events</p>
+        <h2 class="mt-4 font-serif text-4xl text-white sm:text-5xl">
+          Formats that can grow with the room.
+        </h2>
+        <p class="mt-6 max-w-lg leading-relaxed text-stone-300">
+          Keep this page static and simple: edit the lists at the top of this file, and the visual
+          sections stay consistent.
+        </p>
+      </div>
+
+      <div class="grid gap-5 md:grid-cols-3">
+        {
+          events.map((event) => (
+            <article class="border border-white/15 bg-black p-6">
+              <p class="text-xs uppercase tracking-[0.28em] text-amber-300">{event.type}</p>
+              <h3 class="mt-5 font-serif text-2xl text-white">{event.title}</h3>
+              <p class="mt-4 leading-relaxed text-stone-300">{event.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-black px-5 py-16 text-white sm:px-6 lg:px-8">
+    <div class="mx-auto flex max-w-7xl flex-col justify-between gap-8 border-y border-white/15 py-10 md:flex-row md:items-center">
+      <div>
+        <p class="text-sm uppercase tracking-[0.35em] text-amber-300">Ancient vision. Modern sound.</p>
+        <h2 class="mt-4 font-serif text-4xl text-white">Ready to shape the next gathering?</h2>
+      </div>
+
+      <a
+        href="/contact"
+        class="rounded bg-amber-300 px-7 py-4 text-center font-semibold text-black shadow-xl shadow-amber-950/30 transition hover:bg-amber-200"
+      >
+        Contact Theorshan
+      </a>
+    </div>
+  </section>
+
+  <script>
+    const panels = Array.from(document.querySelectorAll("[data-hero-panel]"));
+    const images = Array.from(document.querySelectorAll("[data-hero-image]"));
+    const dots = Array.from(document.querySelectorAll("[data-hero-dot]"));
+    const formatPanels = Array.from(document.querySelectorAll("[data-format-panel]"));
+    const formatDots = Array.from(document.querySelectorAll("[data-format-dot]"));
+    const artistTrack = document.querySelector("[data-artist-track]");
+    const artistButtons = document.querySelectorAll("[data-scroll-artists]");
+    let activeSlide = 0;
+    let activeFormatSlide = 0;
+
+    function showSlide(nextSlide) {
+      activeSlide = (nextSlide + panels.length) % panels.length;
+
+      panels.forEach((panel, index) => {
+        const isActive = index === activeSlide;
+        panel.classList.toggle("opacity-100", isActive);
+        panel.classList.toggle("pointer-events-auto", isActive);
+        panel.classList.toggle("opacity-0", !isActive);
+        panel.classList.toggle("pointer-events-none", !isActive);
+      });
+
+      images.forEach((image, index) => {
+        image.classList.toggle("opacity-70", index === activeSlide);
+        image.classList.toggle("opacity-0", index !== activeSlide);
+      });
+
+      dots.forEach((dot, index) => {
+        dot.classList.toggle("w-10", index === activeSlide);
+        dot.classList.toggle("bg-amber-300", index === activeSlide);
+        dot.classList.toggle("w-2.5", index !== activeSlide);
+        dot.classList.toggle("bg-white/35", index !== activeSlide);
+      });
+    }
+
+    dots.forEach((dot) => {
+      dot.addEventListener("click", () => showSlide(Number(dot.dataset.slide)));
+    });
+
+    if (panels.length > 1) {
+      window.setInterval(() => showSlide(activeSlide + 1), 7000);
+    }
+
+    function showFormatSlide(nextSlide) {
+      activeFormatSlide = (nextSlide + formatPanels.length) % formatPanels.length;
+
+      formatPanels.forEach((panel, index) => {
+        const isActive = index === activeFormatSlide;
+        panel.classList.toggle("opacity-100", isActive);
+        panel.classList.toggle("pointer-events-auto", isActive);
+        panel.classList.toggle("opacity-0", !isActive);
+        panel.classList.toggle("pointer-events-none", !isActive);
+      });
+
+      formatDots.forEach((dot, index) => {
+        dot.classList.toggle("w-8", index === activeFormatSlide);
+        dot.classList.toggle("bg-amber-300", index === activeFormatSlide);
+        dot.classList.toggle("w-2.5", index !== activeFormatSlide);
+        dot.classList.toggle("bg-white/35", index !== activeFormatSlide);
+      });
+    }
+
+    formatDots.forEach((dot) => {
+      dot.addEventListener("click", () => showFormatSlide(Number(dot.dataset.slide)));
+    });
+
+    if (formatPanels.length > 1) {
+      window.setInterval(() => showFormatSlide(activeFormatSlide + 1), 9000);
+    }
+
+    artistButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        if (!artistTrack) return;
+        const direction = button.dataset.scrollArtists === "left" ? -1 : 1;
+        artistTrack.scrollBy({ left: direction * 390, behavior: "smooth" });
+      });
+    });
+  </script>
+
+  <style>
+    .scrollbar-soft {
+      scrollbar-color: rgba(252, 211, 77, 0.75) rgba(255, 255, 255, 0.08);
+      scrollbar-width: thin;
+    }
+
+    .scrollbar-soft::-webkit-scrollbar {
+      height: 10px;
+    }
+
+    .scrollbar-soft::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .scrollbar-soft::-webkit-scrollbar-thumb {
+      background: rgba(252, 211, 77, 0.75);
+    }
+  </style>
+</Layout>

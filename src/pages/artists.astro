@@ -1,0 +1,119 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+// Placeholder roster. Replace names, images, and notes as real artists join Theorshan.
+const artists = [
+  {
+    name: "Ananya Rao",
+    type: "Individual artist",
+    style: "Carnatic vocals",
+    image: "/artist-placeholders/ananya-rao.png",
+    alt: "Portrait of a Carnatic vocalist",
+    profileHref: "/artists/ananya-rao",
+    formats: ["Kutcheri", "Bhajan", "Studio recording"],
+    bio: "A warm, devotional voice for intimate home concerts, temple gatherings, and carefully produced album work.",
+  },
+  {
+    name: "Aarya Sen",
+    type: "Individual artist",
+    style: "Hindustani vocals",
+    image: "/artist-placeholders/aarya-sen.png",
+    alt: "Portrait of a Hindustani vocalist",
+    formats: ["Bhaitak", "Morning ragas", "Evening ragas"],
+    bio: "A raga-centered vocalist suited for close listening rooms, unhurried bhaitaks, and meditative cultural evenings.",
+  },
+  {
+    name: "Mira Dev",
+    type: "Individual artist",
+    style: "Veena and voice",
+    image: "/artist-placeholders/mira-dev.png",
+    alt: "Portrait of a veena artist",
+    formats: ["Sacred spaces", "At-home concerts", "Recording"],
+    bio: "A graceful veena-led sound for listeners who want classical depth with a quiet devotional presence.",
+  },
+  {
+    name: "Sruti Laya Duo",
+    type: "Band / ensemble",
+    style: "Violin and mridangam",
+    image: "/artist-placeholders/sruti-laya-duo.png",
+    alt: "Carnatic violin and mridangam duo",
+    formats: ["Kutcheri", "Lecture demo", "Cultural events"],
+    bio: "A nimble Carnatic duo for compact stages, living room concerts, and educational performances.",
+  },
+  {
+    name: "Raag Sabha Ensemble",
+    type: "Band / ensemble",
+    style: "Hindustani baithak ensemble",
+    image: "/artist-placeholders/raag-sabha-ensemble.png",
+    alt: "Hindustani baithak ensemble",
+    formats: ["Bhaitak", "Raga evenings", "Community programs"],
+    bio: "A small ensemble shaped for morning and evening ragas, with a format that keeps the audience close to the music.",
+  },
+  {
+    name: "Bhakti Pulse Collective",
+    type: "Band / ensemble",
+    style: "Bhajan clubbing / devotional fusion",
+    image: "/artist-placeholders/bhakti-pulse-collective.png",
+    alt: "Devotional fusion group",
+    formats: ["Bhajan clubbing", "Festivals", "Youth gatherings"],
+    bio: "A joyful devotional group blending familiar bhajans, live musicianship, and modern rhythmic energy.",
+  },
+];
+---
+
+<Layout title="Artists | Theorshan">
+  <section class="bg-black px-5 py-20 text-white sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-7xl">
+      <p class="text-sm uppercase tracking-[0.35em] text-amber-300">Artists</p>
+      <div class="mt-5 max-w-4xl">
+        <h1 class="font-serif text-5xl leading-none text-white sm:text-6xl">
+          Voices and ensembles for intimate listening.
+        </h1>
+      </div>
+
+      <div class="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        {
+          artists.map((artist) => (
+            <article class="border border-white/15 bg-stone-950">
+              {
+                artist.profileHref ? (
+                  <a href={artist.profileHref} aria-label={`View ${artist.name} profile`}>
+                    <img src={artist.image} alt={artist.alt} class="h-72 w-full object-cover" />
+                  </a>
+                ) : (
+                  <img src={artist.image} alt={artist.alt} class="h-72 w-full object-cover" />
+                )
+              }
+              <div class="p-6">
+                <p class="text-xs uppercase tracking-[0.28em] text-amber-300">{artist.type}</p>
+                <h2 class="mt-4 font-serif text-3xl text-white">
+                  {
+                    artist.profileHref ? (
+                      <a href={artist.profileHref} class="transition hover:text-amber-200">
+                        {artist.name}
+                      </a>
+                    ) : (
+                      artist.name
+                    )
+                  }
+                </h2>
+                <p class="mt-2 text-amber-100">{artist.style}</p>
+                <p class="mt-4 leading-relaxed text-stone-300">{artist.bio}</p>
+
+                <div class="mt-5 flex flex-wrap gap-2">
+                  {
+                    artist.formats.map((format) => (
+                      <span class="rounded border border-white/15 bg-black px-3 py-2 text-xs text-stone-300">
+                        {format}
+                      </span>
+                    ))
+                  }
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Layout>

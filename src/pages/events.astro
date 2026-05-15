@@ -1,0 +1,131 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+// Sample events for marketing. Replace dates, venues, and ticketUrl when real events are ready.
+const events = [
+  {
+    title: "Intimate Kutcheri at Home",
+    format: "Carnatic house concert",
+    date: "June 22, 2026",
+    time: "6:30 PM",
+    venue: "At-home setting, Edison, NJ",
+    artist: "Ananya Rao with Sruti Laya Duo",
+    description:
+      "A close Carnatic listening experience designed for a living room setting, with vocals, violin, mridangam, and a short artist conversation.",
+    ticketLabel: "Reserve seats",
+    ticketUrl: "https://events.humanitix.com/theorshan-kutcheri-placeholder",
+  },
+  {
+    title: "Morning Raga Bhaitak",
+    format: "Hindustani baithak",
+    date: "July 12, 2026",
+    time: "9:00 AM",
+    venue: "Community studio, Princeton, NJ",
+    artist: "Aarya Sen and Raag Sabha Ensemble",
+    description:
+      "A quiet morning gathering centered on ragas for the early day, tea, and attentive listening in a small-room format.",
+    ticketLabel: "Join waitlist",
+    ticketUrl: "https://events.humanitix.com/theorshan-bhaitak-placeholder",
+  },
+  {
+    title: "Bhajan Clubbing",
+    format: "Devotional fusion night",
+    date: "August 8, 2026",
+    time: "7:30 PM",
+    venue: "Cultural arts hall, Jersey City, NJ",
+    artist: "Bhakti Pulse Collective",
+    description:
+      "Familiar bhajans, live musicianship, and modern rhythmic energy for a devotional gathering that feels communal and alive.",
+    ticketLabel: "Get notified",
+    ticketUrl: "https://events.humanitix.com/theorshan-bhajan-clubbing-placeholder",
+  },
+  {
+    title: "Studio Listening Session",
+    format: "Recording and release showcase",
+    date: "September 5, 2026",
+    time: "5:00 PM",
+    venue: "Theorshan home studio, by invitation",
+    artist: "Featured independent artists",
+    description:
+      "A small preview night for artists interested in recording, album production, and distribution to platforms like Spotify and Apple Music.",
+    ticketLabel: "Request invite",
+    ticketUrl: "https://events.humanitix.com/theorshan-studio-session-placeholder",
+  },
+];
+
+const ticketingNotes = [
+  "Reserve seats for intimate concerts, bhaitaks, and devotional gatherings.",
+  "Receive event details, venue notes, and arrival guidance after registration.",
+  "For at-home concerts or studio sessions, request an invitation through Theorshan.",
+];
+---
+
+<Layout title="Events | Theorshan">
+  <section class="relative overflow-hidden bg-black px-5 py-20 text-white sm:px-6 lg:px-8">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(252,211,77,0.16),transparent_30%)]"></div>
+
+    <div class="relative mx-auto max-w-7xl">
+      <p class="text-sm uppercase tracking-[0.35em] text-amber-300">Upcoming experiences</p>
+      <div class="mt-5 grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+        <h1 class="font-serif text-5xl leading-none text-white sm:text-6xl">
+          Intimate concerts, bhaitaks, and devotional gatherings.
+        </h1>
+        <p class="max-w-2xl text-lg leading-relaxed text-stone-300">
+          Theorshan creates close listening experiences for homes, sacred spaces, studios, and
+          cultural rooms where artists and audiences can meet with attention.
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-6 lg:grid-cols-2">
+        {
+          events.map((event) => (
+            <article class="grid border border-white/15 bg-stone-950 md:grid-cols-[0.72fr_1.28fr]">
+              <div class="flex flex-col justify-between bg-[linear-gradient(135deg,rgba(251,191,36,0.14),rgba(12,10,9,0.98))] p-6">
+                <div>
+                  <p class="text-xs uppercase tracking-[0.28em] text-amber-200">{event.format}</p>
+                  <p class="mt-8 font-serif text-4xl text-white">{event.date}</p>
+                  <p class="mt-2 text-stone-200">{event.time}</p>
+                </div>
+                <p class="mt-10 text-sm text-stone-300">{event.venue}</p>
+              </div>
+
+              <div class="p-6">
+                <h2 class="font-serif text-3xl text-white">{event.title}</h2>
+                <p class="mt-3 text-amber-100">{event.artist}</p>
+                <p class="mt-5 leading-relaxed text-stone-300">{event.description}</p>
+
+                <a
+                  href={event.ticketUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  class="mt-8 inline-block rounded bg-amber-300 px-6 py-3 font-semibold text-black transition hover:bg-amber-200"
+                >
+                  {event.ticketLabel}
+                </a>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-stone-950 px-5 py-16 text-white sm:px-6 lg:px-8">
+    <div class="mx-auto grid max-w-7xl gap-8 border-y border-white/15 py-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <div>
+        <p class="text-sm uppercase tracking-[0.35em] text-amber-300">Reservations</p>
+        <h2 class="mt-4 font-serif text-4xl text-white">Small rooms. Clear details. Thoughtful arrival.</h2>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-3">
+        {
+          ticketingNotes.map((note) => (
+            <div class="border border-white/15 bg-black p-5">
+              <p class="leading-relaxed text-stone-300">{note}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Layout>

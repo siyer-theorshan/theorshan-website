@@ -1,0 +1,53 @@
+---
+import "../styles/global.css";
+
+const { title = "Theorshan", headerOverlay = false } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+  </head>
+
+  <body class="bg-black text-white font-sans antialiased">
+    <header
+      class:list={[
+        "z-50 w-full",
+        headerOverlay ? "absolute inset-x-0 top-0" : "relative bg-black",
+      ]}
+    >
+      <div class="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-6 lg:px-8">
+        <a href="/" class="flex items-center gap-3">
+          <img
+            src="/theorshan-logo.png"
+            alt="Theorshan logo"
+            class="h-12 w-12 rounded-full object-cover ring-1 ring-amber-300/40"
+          />
+          <span class="text-lg font-semibold tracking-[0.28em] text-amber-300 sm:text-xl">
+            THEORSHAN
+          </span>
+        </a>
+
+        <nav class="hidden gap-8 text-sm uppercase tracking-widest text-stone-200 md:flex">
+          <a href="/" class="transition hover:text-amber-300">Home</a>
+          <a href="/artists" class="transition hover:text-amber-300">Artists</a>
+          <a href="/events" class="transition hover:text-amber-300">Events</a>
+          <a href="/contact" class="transition hover:text-amber-300">Contact</a>
+        </nav>
+
+        <a
+          href="/contact"
+          class="rounded bg-amber-300 px-4 py-3 text-sm font-semibold text-black shadow-lg shadow-amber-950/30 transition hover:bg-amber-200 sm:px-5"
+        >
+          Book
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
