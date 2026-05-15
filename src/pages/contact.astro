@@ -1,0 +1,25 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Contact | Theorshan">
+  <section class="max-w-3xl mx-auto px-6 py-24">
+    <h1 class="text-5xl font-bold mb-6">Contact</h1>
+
+    <p class="text-lg text-stone-300 mb-10">
+      Interested in hosting a concert, booking an artist, or collaborating with Theorshan?
+      Reach out and tell us what you have in mind.
+    </p>
+
+    <form class="space-y-5">
+      <input class="w-full bg-stone-900 border border-stone-700 rounded-xl px-4 py-3" placeholder="Name" />
+      <input class="w-full bg-stone-900 border border-stone-700 rounded-xl px-4 py-3" placeholder="Email" />
+      <input class="w-full bg-stone-900 border border-stone-700 rounded-xl px-4 py-3" placeholder="Event type / collaboration idea" />
+      <textarea class="w-full bg-stone-900 border border-stone-700 rounded-xl px-4 py-3 h-36" placeholder="Message"></textarea>
+
+      <button class="bg-white text-stone-950 px-6 py-3 rounded-full font-medium">
+        Send Message
+      </button>
+    </form>
+  </section>
+</Layout>
