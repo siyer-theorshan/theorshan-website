@@ -5,7 +5,7 @@ import Layout from "../layouts/Layout.astro";
 const heroSlides = [
   {
     eyebrow: "Ancient vision. Modern sound.",
-    title: "Sacred sound, close enough to feel.",
+    title: "Intimate concerts. Timeless sound.",
     text: "Theorshan curates intimate live performances where classical roots, devotional atmosphere, and modern production meet in one unforgettable room.",
     image: "/theorshan-homepage-mockup.png",
     alt: "Theorshan live music atmosphere",
@@ -89,6 +89,8 @@ const artists = [
     note: "Familiar bhajans with live musicianship and modern energy.",
   },
 ];
+
+const artistCarouselItems = [...artists, ...artists.slice(0, 3)];
 
 const events = [
   {
@@ -329,18 +331,24 @@ const distributionPlatforms = ["Spotify", "YouTube Music", "Apple Music", "Amazo
       </div>
 
       <div
-        data-artist-track
-        class="scrollbar-soft mt-10 flex snap-x gap-5 overflow-x-auto pb-6"
-        tabindex="0"
-        aria-label="Scrollable artists"
+        class="mt-10 overflow-hidden"
+        aria-label="Featured artist carousel"
       >
-        {
-          artists.map((artist, index) => (
-            <article class="min-w-[78vw] snap-start border border-white/15 bg-stone-950 p-5 sm:min-w-[360px]">
+        <div
+          data-artist-track
+          data-artist-count={artists.length}
+          class="flex gap-5 transition-transform duration-700 ease-out"
+        >
+          {
+            artistCarouselItems.map((artist) => (
+              <article
+                data-artist-card
+                class="artist-carousel-card min-w-0 border border-white/15 bg-stone-950 p-5"
+              >
               <a
                 href={artist.profileHref || "/artists"}
                 aria-label={`View ${artist.name} profile`}
-                class="relative flex h-56 items-end overflow-hidden p-5"
+                class="relative block h-56 overflow-hidden"
               >
                 <img
                   src={artist.image}
@@ -348,9 +356,6 @@ const distributionPlatforms = ["Spotify", "YouTube Music", "Apple Music", "Amazo
                   class="absolute inset-0 h-full w-full object-cover"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                <span class="rounded bg-black/70 px-3 py-2 text-xs uppercase tracking-widest text-amber-200 backdrop-blur">
-                  Artist {index + 1}
-                </span>
               </a>
               <h3 class="mt-5 font-serif text-3xl text-white">
                 <a href={artist.profileHref || "/artists"} class="transition hover:text-amber-200">
@@ -362,6 +367,7 @@ const distributionPlatforms = ["Spotify", "YouTube Music", "Apple Music", "Amazo
             </article>
           ))
         }
+        </div>
       </div>
     </div>
   </section>
@@ -374,9 +380,8 @@ const distributionPlatforms = ["Spotify", "YouTube Music", "Apple Music", "Amazo
           From home studio session to streaming platforms.
         </h2>
         <p class="mt-6 max-w-xl text-lg leading-relaxed text-stone-300">
-          Theorshan supports artists who want a warm recording process and a practical path to
-          release. Record the music, shape the album, and prepare it for listeners on the platforms
-          where they already are.
+          Theorshan supports artists who want a hassle free  process with greater creative control and a practical path to
+          release. Record the music, shape the album, and serve it up for listeners on platforms that matter.
         </p>
 
         <div class="mt-8 flex flex-wrap gap-3">
@@ -463,9 +468,12 @@ const distributionPlatforms = ["Spotify", "YouTube Music", "Apple Music", "Amazo
     const formatPanels = Array.from(document.querySelectorAll("[data-format-panel]"));
     const formatDots = Array.from(document.querySelectorAll("[data-format-dot]"));
     const artistTrack = document.querySelector("[data-artist-track]");
+    const artistCards = Array.from(document.querySelectorAll("[data-artist-card]"));
     const artistButtons = document.querySelectorAll("[data-scroll-artists]");
     let activeSlide = 0;
     let activeFormatSlide = 0;
+    let activeArtistSlide = 0;
+    let shouldResetArtistTrack = false;
 
     function showSlide(nextSlide) {
       activeSlide = (nextSlide + panels.length) % panels.length;
@@ -526,31 +534,86 @@ const distributionPlatforms = ["Spotify", "YouTube Music", "Apple Music", "Amazo
       window.setInterval(() => showFormatSlide(activeFormatSlide + 1), 9000);
     }
 
+    function getVisibleArtistCount() {
+      if (window.matchMedia("(min-width: 1024px)").matches) return 3;
+      if (window.matchMedia("(min-width: 768px)").matches) return 2;
+      return 1;
+    }
+
+    function showArtistSlide(nextSlide) {
+      if (!artistTrack || artistCards.length === 0) return;
+
+      const artistCount = Number(artistTrack.dataset.artistCount) || artistCards.length;
+
+      if (nextSlide < 0) {
+        jumpToArtistSlide(artistCount);
+        window.requestAnimationFrame(() => showArtistSlide(artistCount - 1));
+        return;
+      }
+
+      activeArtistSlide = nextSlide;
+
+      const firstCard = artistCards[0];
+      const gap = Number.parseFloat(window.getComputedStyle(artistTrack).columnGap) || 0;
+      const cardWidth = firstCard.getBoundingClientRect().width + gap;
+      artistTrack.style.transform = `translateX(-${activeArtistSlide * cardWidth}px)`;
+
+      if (activeArtistSlide >= artistCount) {
+        shouldResetArtistTrack = true;
+      }
+    }
+
+    function jumpToArtistSlide(slide) {
+      if (!artistTrack || artistCards.length === 0) return;
+
+      activeArtistSlide = slide;
+      const firstCard = artistCards[0];
+      const gap = Number.parseFloat(window.getComputedStyle(artistTrack).columnGap) || 0;
+      const cardWidth = firstCard.getBoundingClientRect().width + gap;
+
+      artistTrack.style.transition = "none";
+      artistTrack.style.transform = `translateX(-${activeArtistSlide * cardWidth}px)`;
+      artistTrack.offsetHeight;
+      window.requestAnimationFrame(() => {
+        artistTrack.style.transition = "";
+      });
+    }
+
+    artistTrack?.addEventListener("transitionend", (event) => {
+      if (event.propertyName !== "transform" || !shouldResetArtistTrack) return;
+      shouldResetArtistTrack = false;
+      jumpToArtistSlide(0);
+    });
+
     artistButtons.forEach((button) => {
       button.addEventListener("click", () => {
-        if (!artistTrack) return;
         const direction = button.dataset.scrollArtists === "left" ? -1 : 1;
-        artistTrack.scrollBy({ left: direction * 390, behavior: "smooth" });
+        showArtistSlide(activeArtistSlide + direction);
       });
     });
+
+    window.addEventListener("resize", () => showArtistSlide(activeArtistSlide));
+
+    if (artistCards.length > 1) {
+      window.setInterval(() => showArtistSlide(activeArtistSlide + 1), 6000);
+    }
   </script>
 
   <style>
-    .scrollbar-soft {
-      scrollbar-color: rgba(252, 211, 77, 0.75) rgba(255, 255, 255, 0.08);
-      scrollbar-width: thin;
+    .artist-carousel-card {
+      flex: 0 0 100%;
     }
 
-    .scrollbar-soft::-webkit-scrollbar {
-      height: 10px;
+    @media (min-width: 768px) {
+      .artist-carousel-card {
+        flex-basis: calc((100% - 20px) / 2);
+      }
     }
 
-    .scrollbar-soft::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .scrollbar-soft::-webkit-scrollbar-thumb {
-      background: rgba(252, 211, 77, 0.75);
+    @media (min-width: 1024px) {
+      .artist-carousel-card {
+        flex-basis: calc((100% - 40px) / 3);
+      }
     }
   </style>
 </Layout>
