@@ -1,7 +1,10 @@
 type Env = {
-  RESEND_API_KEY?: string;
+  ZEPTOMAIL_TOKEN?: string;
+  ZEPTOMAIL_API_URL?: string;
+  ZEPTOMAIL_BOUNCE_ADDRESS?: string;
   CONTACT_TO_EMAIL?: string;
   CONTACT_FROM_EMAIL?: string;
+  CONTACT_FROM_NAME?: string;
 };
 
 type PagesFunctionContext = {
@@ -58,7 +61,8 @@ export const onRequestPost = async ({ request, env }: PagesFunctionContext) => {
       !idea ||
       !allowedInquiryTypes.has(idea) ||
       !message ||
-      !env.RESEND_API_KEY ||
+      !env.ZEPTOMAIL_TOKEN ||
+      !env.ZEPTOMAIL_BOUNCE_ADDRESS ||
       !env.CONTACT_TO_EMAIL ||
       !env.CONTACT_FROM_EMAIL
     ) {
@@ -73,19 +77,30 @@ export const onRequestPost = async ({ request, env }: PagesFunctionContext) => {
       return redirectTo(request, "error");
     }
 
-    const response = await fetch("https://api.resend.com/emails", {
+    const response = await fetch(env.ZEPTOMAIL_API_URL || "https://api.zeptomail.com/v1.1/email", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${env.RESEND_API_KEY}`,
+        Accept: "application/json",
+        Authorization: `Zoho-enczapikey ${env.ZEPTOMAIL_TOKEN}`,
         "Content-Type": "application/json",
         "User-Agent": "Theorshan contact form",
       },
       body: JSON.stringify({
-        from: env.CONTACT_FROM_EMAIL,
-        to: [env.CONTACT_TO_EMAIL],
-        reply_to: email,
+        bounce_address: env.ZEPTOMAIL_BOUNCE_ADDRESS,
+        from: {
+          address: env.CONTACT_FROM_EMAIL,
+          name: env.CONTACT_FROM_NAME || "Theorshan",
+        },
+        to: [
+          {
+            email_address: {
+              address: env.CONTACT_TO_EMAIL,
+              name: "Theorshan",
+            },
+          },
+        ],
         subject: `Theorshan contact form: ${idea || "New inquiry"}`,
-        text: [
+        textbody: [
           `Name: ${name}`,
           `Email: ${email}`,
           `Phone: ${phone ? `${dialCode} ${phone}` : "Not provided"}`,
