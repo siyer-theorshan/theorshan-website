@@ -1,5 +1,20 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+const sent = Astro.url.searchParams.get("sent") === "1";
+const error = Astro.url.searchParams.get("error") === "1";
+
+const phoneCountries = [
+  { label: "🇺🇸 +1 US", value: "US|+1" },
+  { label: "🇨🇦 +1 Canada", value: "CA|+1" },
+  { label: "🇮🇳 +91 India", value: "IN|+91" },
+  { label: "🇬🇧 +44 UK", value: "GB|+44" },
+  { label: "🇦🇺 +61 Australia", value: "AU|+61" },
+  { label: "🇸🇬 +65 Singapore", value: "SG|+65" },
+  { label: "🇦🇪 +971 UAE", value: "AE|+971" },
+];
+
+const inquiryTypes = ["Book an Artist", "Request Artist Services", "Ticket Request", "General Inquiry"];
 ---
 
 <Layout title="Contact | Theorshan">
@@ -11,15 +26,129 @@ import Layout from "../layouts/Layout.astro";
       Reach out and tell us what you have in mind.
     </p>
 
-    <form class="space-y-5">
-      <input class="w-full bg-stone-900 border border-stone-700 rounded-xl px-4 py-3" placeholder="Name" />
-      <input class="w-full bg-stone-900 border border-stone-700 rounded-xl px-4 py-3" placeholder="Email" />
-      <input class="w-full bg-stone-900 border border-stone-700 rounded-xl px-4 py-3" placeholder="Event type / collaboration idea" />
-      <textarea class="w-full bg-stone-900 border border-stone-700 rounded-xl px-4 py-3 h-36" placeholder="Message"></textarea>
+    <form
+      class="space-y-5"
+      action="/api/contact"
+      method="post"
+    >
+      {
+        sent && (
+          <p class="rounded-xl border border-emerald-400/30 bg-emerald-950/40 px-4 py-3 text-emerald-100">
+            Thanks. Your message has been sent.
+          </p>
+        )
+      }
+
+      {
+        error && (
+          <p class="rounded-xl border border-red-400/30 bg-red-950/40 px-4 py-3 text-red-100">
+            Sorry, the message could not be sent. Please try again in a moment.
+          </p>
+        )
+      }
+
+      <input class="hidden" name="company" tabindex="-1" autocomplete="off" />
+
+      <input
+        class="w-full bg-stone-900 border border-stone-700 rounded-xl px-4 py-3"
+        name="name"
+        placeholder="Name"
+        required
+      />
+      <input
+        class="w-full bg-stone-900 border border-stone-700 rounded-xl px-4 py-3"
+        name="email"
+        type="email"
+        placeholder="Email"
+        required
+      />
+      <div class="grid gap-3 sm:grid-cols-[190px_1fr]">
+        <select
+          class="w-full bg-stone-900 border border-stone-700 rounded-xl px-4 py-3"
+          name="phone_country"
+          aria-label="Phone country code"
+          data-phone-country
+        >
+          {
+            phoneCountries.map((country) => (
+              <option value={country.value}>{country.label}</option>
+            ))
+          }
+        </select>
+
+        <input
+          class="w-full bg-stone-900 border border-stone-700 rounded-xl px-4 py-3"
+          name="phone"
+          type="tel"
+          inputmode="tel"
+          autocomplete="tel-national"
+          pattern="[1-9][0-9]*"
+          placeholder="Phone number optional"
+          data-phone-input
+        />
+      </div>
+      <p class="hidden text-sm text-red-200" data-phone-error>
+        Enter digits only, starting with 1-9. US and Canada numbers must contain exactly 10 digits.
+      </p>
+      <select
+        class="w-full bg-stone-900 border border-stone-700 rounded-xl px-4 py-3"
+        name="event_or_collaboration"
+        required
+      >
+        <option value="" disabled selected>Select Inquiry Type</option>
+        {
+          inquiryTypes.map((type) => (
+            <option value={type}>{type}</option>
+          ))
+        }
+      </select>
+      <textarea
+        class="w-full bg-stone-900 border border-stone-700 rounded-xl px-4 py-3 h-36"
+        name="message"
+        placeholder="Message"
+        required
+      ></textarea>
 
       <button class="bg-white text-stone-950 px-6 py-3 rounded-full font-medium">
         Send Message
       </button>
     </form>
   </section>
+
+  <script>
+    const contactForm = document.querySelector("form[action='/api/contact']");
+    const phoneCountry = document.querySelector("[data-phone-country]");
+    const phoneInput = document.querySelector("[data-phone-input]");
+    const phoneError = document.querySelector("[data-phone-error]");
+
+    function validatePhone() {
+      if (!(phoneCountry instanceof HTMLSelectElement) || !(phoneInput instanceof HTMLInputElement)) {
+        return true;
+      }
+
+      const digits = phoneInput.value.replace(/\D/g, "");
+      const countryCode = phoneCountry.value.split("|")[0];
+      const needsTenDigits = countryCode === "US" || countryCode === "CA";
+      const hasOnlyDigits = phoneInput.value === digits;
+      const hasValidLeadingDigit = !digits || /^[1-9]/.test(digits);
+      const hasValidLength = !digits || !needsTenDigits || digits.length === 10;
+      const isValid = hasOnlyDigits && hasValidLeadingDigit && hasValidLength;
+
+      phoneInput.setCustomValidity(
+        isValid ? "" : "Enter digits only, starting with 1-9. US and Canada numbers must contain exactly 10 digits.",
+      );
+      phoneError?.classList.toggle("hidden", isValid);
+      return isValid;
+    }
+
+    phoneInput?.addEventListener("input", validatePhone);
+    phoneCountry?.addEventListener("change", validatePhone);
+
+    contactForm?.addEventListener("submit", (event) => {
+      if (!validatePhone()) {
+        event.preventDefault();
+        phoneInput?.focus();
+      }
+    });
+  </script>
 </Layout>
