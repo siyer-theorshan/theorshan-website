@@ -1,0 +1,111 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const artist = {
+  name: "Partha Sarathi Chatterjee",
+  style: "Sitar",
+  image:
+    "https://parthasarathichatterjee.com/wp-content/uploads/2016/05/ParthaSarathiChatterjee.jpg",
+  website: "https://parthasarathichatterjee.com",
+  youtubeEmbedUrl: "https://www.youtube.com/embed/Ud7QUemGnrM?si=VfK3mBg0yPsgnTQ-",
+  bio: "Partha Sarathi Chatterjee is a Kolkata-born sitarist who shuttles between Kolkata and New Jersey. Trained in the Senia-Maihar and Imdadkhani traditions, his music balances patient raga development, lyrical phrasing, and rhythmic clarity, bringing a soulful concert presence to intimate listening spaces.",
+  highlights: [
+    "Kolkata-born sitarist shaped by a deep classical foundation",
+    "Draws from Senia-Maihar and Imdadkhani training",
+    "Performs and teaches across Kolkata, New Jersey, and beyond",
+  ],
+  formats: ["Sitar recital", "Bhaitak", "Raga concert"],
+};
+---
+
+<Layout title={`${artist.name} | Theorshan`}>
+  <section class="bg-black px-5 py-20 text-white sm:px-6 lg:px-8">
+    <div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
+      <div>
+        <p class="text-sm uppercase tracking-[0.35em] text-amber-300">Artist</p>
+        <h1 class="mt-5 font-serif text-5xl leading-none text-white sm:text-6xl">
+          {artist.name}
+        </h1>
+        <p class="mt-5 text-xl text-amber-100">{artist.style}</p>
+        <p class="mt-6 max-w-2xl text-lg leading-relaxed text-stone-300">{artist.bio}</p>
+
+        <div class="mt-8 flex flex-col gap-4 sm:flex-row">
+          <a
+            href="/contact"
+            class="rounded bg-amber-300 px-7 py-4 text-center font-semibold text-black shadow-xl shadow-amber-950/30 transition hover:bg-amber-200"
+          >
+            Book This Artist
+          </a>
+          <a
+            href={artist.website}
+            target="_blank"
+            rel="noreferrer"
+            class="rounded border border-white/30 bg-white/10 px-7 py-4 text-center font-semibold text-white transition hover:border-amber-300 hover:text-amber-200"
+          >
+            Artist Website
+          </a>
+        </div>
+      </div>
+
+      <div class="overflow-hidden border border-white/15 bg-stone-950">
+        <img
+          src={artist.image}
+          alt={`Portrait of ${artist.name}`}
+          class="h-[520px] w-full object-cover object-top"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-stone-950 px-5 py-20 text-white sm:px-6 lg:px-8">
+    <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:items-start">
+      <div>
+        <p class="text-sm uppercase tracking-[0.35em] text-amber-300">Listen</p>
+        <h2 class="mt-4 font-serif text-4xl text-white sm:text-5xl">
+          A glimpse of the sitar in concert.
+        </h2>
+      </div>
+
+      <div class="aspect-video overflow-hidden border border-white/15 bg-black">
+        <iframe
+          title={`${artist.name} featured video`}
+          class="h-full w-full border-0"
+          src={artist.youtubeEmbedUrl}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-black px-5 py-20 text-white sm:px-6 lg:px-8">
+    <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-2">
+      <div>
+        <p class="text-sm uppercase tracking-[0.35em] text-amber-300">Highlights</p>
+        <div class="mt-6 grid gap-4">
+          {
+            artist.highlights.map((highlight) => (
+              <p class="border border-white/15 bg-stone-950 p-5 leading-relaxed text-stone-300">
+                {highlight}
+              </p>
+            ))
+          }
+        </div>
+      </div>
+
+      <div>
+        <p class="text-sm uppercase tracking-[0.35em] text-amber-300">Formats</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          {
+            artist.formats.map((format) => (
+              <span class="rounded border border-amber-300/30 bg-stone-950 px-4 py-3 text-sm text-amber-100">
+                {format}
+              </span>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
