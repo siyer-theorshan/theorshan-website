@@ -1,7 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-const sent = Astro.url.searchParams.get("sent") === "1";
 const error = Astro.url.searchParams.get("error") === "1";
 
 const phoneCountries = [
@@ -31,14 +30,6 @@ const inquiryTypes = ["Book an Artist", "Request Artist Services", "Ticket Reque
       action="/api/contact"
       method="post"
     >
-      {
-        sent && (
-          <p class="rounded-xl border border-emerald-400/30 bg-emerald-950/40 px-4 py-3 text-emerald-100">
-            Thanks. Your message has been sent.
-          </p>
-        )
-      }
-
       {
         error && (
           <p class="rounded-xl border border-red-400/30 bg-red-950/40 px-4 py-3 text-red-100">
