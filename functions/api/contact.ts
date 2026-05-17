@@ -36,6 +36,13 @@ const allowedInquiryTypes = new Set([
   "General Inquiry",
 ]);
 
+const configuredEnvKeys = (env: Env) => ({
+  ZEPTOMAIL_TOKEN: Boolean(env.ZEPTOMAIL_TOKEN),
+  ZEPTOMAIL_BOUNCE_ADDRESS: Boolean(env.ZEPTOMAIL_BOUNCE_ADDRESS),
+  CONTACT_TO_EMAIL: Boolean(env.CONTACT_TO_EMAIL),
+  CONTACT_FROM_EMAIL: Boolean(env.CONTACT_FROM_EMAIL),
+});
+
 export const onRequestPost = async ({ request, env }: PagesFunctionContext) => {
   try {
     const form = await request.formData();
@@ -66,14 +73,32 @@ export const onRequestPost = async ({ request, env }: PagesFunctionContext) => {
       !env.CONTACT_TO_EMAIL ||
       !env.CONTACT_FROM_EMAIL
     ) {
+      console.error("Theorshan contact form rejected before send", {
+        hasName: Boolean(name),
+        hasEmail: Boolean(email),
+        inquiryType: idea,
+        inquiryTypeAllowed: allowedInquiryTypes.has(idea),
+        hasMessage: Boolean(message),
+        env: configuredEnvKeys(env),
+      });
       return redirectTo(request, "error");
     }
 
     if (phone && isNorthAmericanPhone && phoneDigits.length !== 10) {
+      console.error("Theorshan contact form rejected for North American phone length", {
+        country,
+        phoneLength: phoneDigits.length,
+      });
       return redirectTo(request, "error");
     }
 
     if (phone && (phone !== phoneDigits || !/^[1-9]/.test(phoneDigits))) {
+      console.error("Theorshan contact form rejected for phone format", {
+        country,
+        phoneLength: phoneDigits.length,
+        startsWithNonZero: /^[1-9]/.test(phoneDigits),
+        digitsOnly: phone === phoneDigits,
+      });
       return redirectTo(request, "error");
     }
 
@@ -112,11 +137,17 @@ export const onRequestPost = async ({ request, env }: PagesFunctionContext) => {
     });
 
     if (!response.ok) {
+      console.error("ZeptoMail contact send failed", {
+        status: response.status,
+        statusText: response.statusText,
+        body: await response.text(),
+      });
       return redirectTo(request, "error");
     }
 
     return redirectTo(request, "sent");
-  } catch {
+  } catch (error) {
+    console.error("Theorshan contact form crashed", error);
     return redirectTo(request, "error");
   }
 };

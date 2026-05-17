@@ -34,6 +34,13 @@ const redirectToContact = (request: Request, status: ContactStatus) => {
   return Response.redirect(url.toString(), 303);
 };
 
+const configuredEnvKeys = (env: Env) => ({
+  ZEPTOMAIL_TOKEN: Boolean(env.ZEPTOMAIL_TOKEN),
+  ZEPTOMAIL_BOUNCE_ADDRESS: Boolean(env.ZEPTOMAIL_BOUNCE_ADDRESS),
+  CONTACT_TO_EMAIL: Boolean(env.CONTACT_TO_EMAIL),
+  CONTACT_FROM_EMAIL: Boolean(env.CONTACT_FROM_EMAIL),
+});
+
 const handleContactPost = async (request: Request, env: Env) => {
   try {
     const form = await request.formData();
@@ -64,14 +71,32 @@ const handleContactPost = async (request: Request, env: Env) => {
       !env.CONTACT_TO_EMAIL ||
       !env.CONTACT_FROM_EMAIL
     ) {
+      console.error("Theorshan contact form rejected before send", {
+        hasName: Boolean(name),
+        hasEmail: Boolean(email),
+        inquiryType: idea,
+        inquiryTypeAllowed: allowedInquiryTypes.has(idea),
+        hasMessage: Boolean(message),
+        env: configuredEnvKeys(env),
+      });
       return redirectToContact(request, "error");
     }
 
     if (phone && isNorthAmericanPhone && phoneDigits.length !== 10) {
+      console.error("Theorshan contact form rejected for North American phone length", {
+        country,
+        phoneLength: phoneDigits.length,
+      });
       return redirectToContact(request, "error");
     }
 
     if (phone && (phone !== phoneDigits || !/^[1-9]/.test(phoneDigits))) {
+      console.error("Theorshan contact form rejected for phone format", {
+        country,
+        phoneLength: phoneDigits.length,
+        startsWithNonZero: /^[1-9]/.test(phoneDigits),
+        digitsOnly: phone === phoneDigits,
+      });
       return redirectToContact(request, "error");
     }
 
@@ -110,11 +135,17 @@ const handleContactPost = async (request: Request, env: Env) => {
     });
 
     if (!response.ok) {
+      console.error("ZeptoMail contact send failed", {
+        status: response.status,
+        statusText: response.statusText,
+        body: await response.text(),
+      });
       return redirectToContact(request, "error");
     }
 
     return redirectToContact(request, "sent");
-  } catch {
+  } catch (error) {
+    console.error("Theorshan contact form crashed", error);
     return redirectToContact(request, "error");
   }
 };
