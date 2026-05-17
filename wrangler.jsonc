@@ -6,5 +6,11 @@
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS"
+  },
+  "vars": {
+    "ZEPTOMAIL_BOUNCE_ADDRESS": "bounce@bounce-zem.theorshan.com",
+    "CONTACT_TO_EMAIL": "siyer@theorshan.com",
+    "CONTACT_FROM_EMAIL": "no-reply@theorshan.com",
+    "CONTACT_FROM_NAME": "Theorshan"
   }
 }
