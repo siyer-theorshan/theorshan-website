@@ -29,8 +29,8 @@ const phoneCountryDetails = (value: string) => {
 
 const redirectToContact = (request: Request, status: ContactStatus) => {
   const url = new URL(request.url);
-  url.pathname = "/contact";
-  url.search = status === "sent" ? "?sent=1" : "?error=1";
+  url.pathname = status === "sent" ? "/thank-you" : "/contact";
+  url.search = status === "sent" ? "" : "?error=1";
   return Response.redirect(url.toString(), 303);
 };
 
