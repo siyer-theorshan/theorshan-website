@@ -5,7 +5,7 @@ import Layout from "../layouts/Layout.astro";
 const heroSlides = [
   {
     eyebrow: "Ancient vision. Modern sound.",
-    title: "Intimate concerts. Timeless sound.",
+    title: "Intimate concerts. Timeless music.",
     text: "Theorshan curates intimate live performances where classical roots, devotional atmosphere, and modern production meet in one unforgettable room.",
     image: "/theorshan-homepage-mockup.png",
     alt: "Theorshan live music atmosphere",
@@ -85,7 +85,7 @@ const artists = [
   },
   {
     name: "Bhakti Pulse Collective",
-    style: "Bhajan clubbing / devotional fusion",
+    style: "Bhajan / devotional fusion",
     image: "/artist-placeholders/bhakti-pulse-collective.png",
     note: "Familiar bhajans with live musicianship and modern energy.",
   },
@@ -128,7 +128,7 @@ const featuredFormats = [
   },
   {
     tradition: "Devotional fusion",
-    title: "Bhajan clubbing",
+    title: "Bhajans",
     description:
       "A vibrant devotional gathering that blends familiar bhajans, live musicianship, and modern energy for community celebration.",
   },
@@ -405,12 +405,9 @@ const distributionPlatforms = ["Spotify", "YouTube Music", "Apple Music", "Amazo
 
       <div class="grid gap-5">
         {
-          studioServices.map((service, index) => (
+          studioServices.map((service) => (
             <article class="border border-white/15 bg-black p-6">
-              <p class="text-xs uppercase tracking-[0.28em] text-amber-300">
-                Service {index + 1}
-              </p>
-              <h3 class="mt-4 font-serif text-3xl text-white">{service.title}</h3>
+              <h3 class="font-serif text-3xl text-white">{service.title}</h3>
               <p class="mt-4 leading-relaxed text-stone-300">{service.description}</p>
             </article>
           ))
